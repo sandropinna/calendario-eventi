@@ -118,7 +118,8 @@
     	  //console.log(event);
     	  var description = event.description;
     	  var descriptionWithBlank = description;
-    	  if(((description.includes("<a")) &&(!description.includes("_blank")))){
+    	  //if(((description.includes("<a")) &&(!description.includes("_blank")))){
+    	  if(( (description.indexOf("<a") > -1 ) &&( description.indexOf("_blank") < 0  ))){
     		  descriptionWithBlank = description.replace('<a', '<a target = "_blank" ');
     	    	//console.log(description);
     	    	//console.log(descriptionWithBlank);
@@ -159,16 +160,16 @@
        // console.log("token------------------------->");
         //console.log(token);
         var substr = token.substring(token.length-3);
-        if(token.endsWith("Corte 0")){
+        if(token.indexOf("Corte 0") > -1){
         	substr = "1000";
         }
-        if(token.endsWith("Corte 1")){
+        if(token.indexOf("Corte 1") > -1){
         	substr = "1001";
         }
-        if(token.endsWith("Corte 2")){
+        if(token.indexOf("Corte 2") > -1){
         	substr = "1002";
         }
-        if(token.endsWith("Corte 3")){
+        if(token.indexOf("Corte 3") > -1){
         	substr = "1003";
         }
         //console.log(substr);
