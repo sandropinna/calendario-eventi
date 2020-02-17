@@ -29,3 +29,8 @@ body {
 /* your colors */
 .legend .occupato { background-color: #ff0000; }
 .legend .libero { background-color: #ffffff; }
+
+.moreBorder{  
+  border: 2px solid red;
+  border-radius: 20px;
+}

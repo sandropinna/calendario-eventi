@@ -22,8 +22,7 @@
       {
         labelText: 'Locale',
         field: 'title',
-        width: 60,
-        
+        width: 70,        
       }
     ], 
       resources: [
@@ -36,7 +35,12 @@
         { id: '114',piano: 'Piano terra', title: '114' },
         { id: '201',piano: 'Primo piano', title: '201' },
         { id: '202',piano: 'Primo piano', title: '202' },
-        { id: '207',piano: 'Primo piano', title: '207' }
+        { id: '207',piano: 'Primo piano', title: '207' },
+        { id: '1000',piano: 'Piano terra', title: 'Corte 0' },
+        { id: '1001',piano: 'Piano terra', title: 'Corte 1' },
+        { id: '1002',piano: 'Piano terra', title: 'Corte 2' },
+        { id: '1003',piano: 'Sottopiano', title: 'Corte 3' }
+        
       ],
       
 
@@ -49,11 +53,12 @@
     	googleCalendarId: '',
     	className: 'eventiPubblici',
         eventDataTransform: function( eventData ) { 
-            console.log(eventData);
+            //console.log(eventData);
             eventData.resourceIds = parseTitle(eventData.title);
             //eventData.title = eventData.description;
             //eventData.rendering = 'background';
-            eventData.title = "";            
+            eventData.title = "";   
+            eventData.className = "moreBorder";
             eventData.color = 'red';
             return eventData;
         }      
@@ -64,12 +69,13 @@
       	googleCalendarId: '',
       	className: 'eventiPubblici',
           eventDataTransform: function( eventData ) { 
-              console.log(eventData);
+              //console.log(eventData);
               eventData.resourceIds = parseTitle(eventData.title);
               //eventData.title = eventData.description;
               //eventData.rendering = 'background';
-              eventData.description = 'Evento riservato agli iscritti';
-              eventData.title = "";            
+              //eventData.description = 'Evento riservato agli iscritti';
+              eventData.title = ""; 
+              eventData.className = "moreBorder";
               eventData.color = 'red';
               return eventData;
           }      
@@ -80,12 +86,13 @@
           	googleCalendarId: '',
           	className: 'eventiPubblici',
               eventDataTransform: function( eventData ) { 
-                  console.log(eventData);
+                  //console.log(eventData);
                   eventData.resourceIds = parseTitle(eventData.title);
                   //eventData.title = eventData.description;
                   //eventData.rendering = 'background';
-                  eventData.description = 'Spazio Occupato per attività interna';
-                  eventData.title = "";            
+                  eventData.description = 'Attività SA Manifattura';
+                  eventData.title = "";  
+                  eventData.className = "moreBorder";
                   eventData.color = 'red';
                   return eventData;
               }      
@@ -93,15 +100,31 @@
          }
       
       ],
+      columnHeaderText: function(date) {
+    	    if (date.getDay() === 5) {
+    	      return 'Friday!';
+    	    } else {
+    	      return mom.format('LLL');
+    	    }
+      },
       
       eventClick: function(event) {
         // opens events in a popup window
         //window.open(event.url, 'gcalevent', 'width=700,height=600');
         return false;
       },
-      eventRender: function(event, element) {      	
+      eventRender: function(event, element) {  
+    	  //console.log("EVENT---->");
+    	  //console.log(event);
+    	  var description = event.description;
+    	  var descriptionWithBlank = description;
+    	  if(((description.includes("<a")) &&(!description.includes("_blank")))){
+    		  descriptionWithBlank = description.replace('<a', '<a target = "_blank" ');
+    	    	//console.log(description);
+    	    	//console.log(descriptionWithBlank);
+    	    }
   	    element.qtip({
-  	      content: event.description,
+  	      content: descriptionWithBlank,
   	    	//content: "<a href='https://www.google.com'>" + event.description +"</a>",
   	    	hide: {
   	          fixed: true,
@@ -119,7 +142,7 @@
       resourceRender: function(resourceObj, labelTds, bodyTds) {        
           var resourceLabel = labelTds.find('.fc-cell-text');
           var oldLabel = resourceLabel.text();
-          var imgUrl =  imgUrl= oldLabel + ".html";
+          var imgUrl =  oldLabel + ".html";
           var newLabel = '<a href="' + imgUrl + '" target="_blank">' + oldLabel + '</a>'; 
           resourceLabel.text('');
           resourceLabel.append(newLabel);          
@@ -133,8 +156,22 @@
     var locali = [];
     for(var i =0; i <tokens.length; i++){
         var token = tokens[i].trim();
+       // console.log("token------------------------->");
         //console.log(token);
         var substr = token.substring(token.length-3);
+        if(token.endsWith("Corte 0")){
+        	substr = "1000";
+        }
+        if(token.endsWith("Corte 1")){
+        	substr = "1001";
+        }
+        if(token.endsWith("Corte 2")){
+        	substr = "1002";
+        }
+        if(token.endsWith("Corte 3")){
+        	substr = "1003";
+        }
+        //console.log(substr);
         //console.log(substr + "--->" + isNaN(substr));
         if(!isNaN(substr)){
             locali.push(substr);
