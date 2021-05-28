@@ -28,10 +28,7 @@
       resources: [
         { id: '004',piano: 'Sottopiano', title: '004' },
         { id: '007',piano: 'Sottopiano', title: '007'},
-        { id: '102',piano: 'Piano terra', title: '102' },
-        { id: '109',piano: 'Piano terra', title: '109' },
         { id: '110',piano: 'Piano terra', title: '110' },
-        { id: '113',piano: 'Piano terra', title: '113' },
         { id: '114',piano: 'Piano terra', title: '114' },
         { id: '201',piano: 'Primo piano', title: '201' },
         { id: '202',piano: 'Primo piano', title: '202' },
